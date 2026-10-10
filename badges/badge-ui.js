@@ -4,20 +4,23 @@
   const gallery = $('badgeGallery'), search = $('badgeSearch'), rarity = $('badgeRarityFilter');
   const category = $('badgeCategoryFilter'), sort = $('badgeSort'), count = $('badgeVaultCount');
   if (!gallery || !window.EchoBadgeSystem) return;
-  let activeCard = null, activeBadge = null, audio = null, closeTimer = null;
+  let activeCard = null, activeBadge = null, audio = null, closeTimer = null, audioUnlocked = false;
+  const unlockAudio = () => { audioUnlocked = true; };
+  document.addEventListener('pointerdown', unlockAudio, { once: true, capture: true });
+  document.addEventListener('keydown', unlockAudio, { once: true, capture: true });
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const rarityClass = value => String(value || 'common').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
   const rarityOrder = ['common','uncommon','rare','epic','legendary','mythic','singularity'];
   function playSound(badge) {
     const settings = window.EchoBadgeSystem.getSettings();
-    if (!settings.playHoverSound) return;
+    if (settings.playHoverSound === false) return;
     const src = badge.hoverSoundUri || settings.hoverSoundUri;
     if (!src) return;
     try { if (audio) { audio.pause(); audio.currentTime = 0; } audio = new Audio(src); audio.volume = .35; audio.play().catch(() => {}); } catch (_) {}
   }
   function details(b) {
     const settings = window.EchoBadgeSystem.getSettings();
-    return `<div class="tome-detail-head"><div class="badge-detail-art"><img src="${esc(b.imageUri || '')}" alt=""></div><button type="button" class="tome-detail-close" aria-label="Close tome details">×</button></div><div class="badge-detail-copy"><span class="badge-detail-kicker">TOME INTELLIGENCE // ${esc(b.category || 'ARCHIVE')}</span><h3>${esc(b.name || 'Unknown Tome')}</h3><span class="badge-rarity rarity-${rarityClass(b.rarity)}">${esc(b.rarity || 'Common')}</span>${settings.showDescription !== false ? `<p>${esc(b.description || 'No lore has been configured yet.')}</p>` : ''}${settings.showHowToEarn !== false ? `<div class="badge-howto"><b>HOW TO DISCOVER</b><p>${esc(b.howToEarn || 'Discovery record not configured.')}</p></div>` : ''}<div class="tome-detail-meta"><span>ARCHIVE RECORD</span><code>${esc(b.id || 'CUSTOM')}</code></div></div>`;
+    return `<div class="tome-detail-head"><div class="badge-detail-art"><img src="${esc(b.imageUri || '')}" alt=""></div><button type="button" class="tome-detail-close" aria-label="Close tome details">×</button></div><div class="badge-detail-copy"><span class="badge-detail-kicker">TOME INTELLIGENCE // ${esc(b.category || 'ARCHIVE')}</span><h3>${esc(b.name || 'Unknown Tome')}</h3><span class="badge-rarity rarity-${rarityClass(b.rarity)}">${esc(b.rarity || 'Common')}</span>${settings.showDescription !== false ? `<p>${esc(b.description || 'No description has been configured yet.')}</p>${b.lore ? `<p class="tome-lore">${esc(b.lore)}</p>` : ''}` : ''}${settings.showHowToEarn !== false ? `<div class="badge-howto"><b>HOW TO DISCOVER</b><p>${esc(b.howToEarn || 'Discovery record not configured.')}</p></div>` : ''}<div class="tome-detail-meta"><span>ARCHIVE RECORD</span><code>${esc(b.id || 'CUSTOM')}</code></div></div>`;
   }
   function closeDetails() {
     clearTimeout(closeTimer);
@@ -50,6 +53,7 @@
     panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', `${badge.name || 'Tome'} details`); panel.innerHTML = details(badge);
     document.body.appendChild(panel); positionPanel(panel, card); playSound(badge);
     panel.querySelector('.tome-detail-close')?.addEventListener('click', closeDetails);
+    panel.querySelector('.badge-detail-art img')?.addEventListener('error', () => { const art = panel.querySelector('.badge-detail-art'); if (art) art.innerHTML = '<span class="badge-image-missing">IMAGE UNAVAILABLE</span>'; });
     panel.addEventListener('mouseenter', () => clearTimeout(closeTimer));
     panel.addEventListener('mouseleave', () => { if (matchMedia('(hover: hover)').matches) closeTimer = setTimeout(closeDetails, 160); });
     panel.addEventListener('click', e => e.stopPropagation());
@@ -79,6 +83,7 @@
     gallery.innerHTML = list.map((b,i) => `<button type="button" class="badge-card rarity-${rarityClass(b.rarity)} ${esc(b.customClass || '')}" data-badge-id="${esc(b.id)}" aria-expanded="false" style="--badge-index:${i}"><span class="badge-card-scan" aria-hidden="true"></span><span class="badge-art">${b.imageUri ? `<img src="${esc(b.imageUri)}" alt="" loading="lazy">` : '<span class="badge-fallback">✦</span>'}</span><span class="badge-card-name">${esc(b.name || 'Unknown Tome')}</span><span class="badge-card-rarity">${esc(b.rarity || 'Common')}</span><span class="badge-card-category">${esc(b.category || 'ARCHIVE')}</span><span class="badge-card-action">VIEW RECORD <span aria-hidden="true">↗</span></span></button>`).join('') || '<div class="badge-empty">NO TOME RECORDS MATCH THIS SEARCH</div>';
     gallery.querySelectorAll('.badge-card').forEach(card => {
       const b = badges.find(x => String(x.id) === card.dataset.badgeId); if (!b) return;
+      card.querySelector('.badge-art img')?.addEventListener('error', () => { const art = card.querySelector('.badge-art'); if (art) art.innerHTML = '<span class="badge-image-missing">IMAGE<br>UNAVAILABLE</span>'; });
       card.addEventListener('mouseenter', () => { if (matchMedia('(hover: hover)').matches) showDetails(card,b); });
       card.addEventListener('mouseleave', e => { if (matchMedia('(hover: hover)').matches && activeCard === card && !document.querySelector('.badge-detail-popover')?.contains(e.relatedTarget)) closeTimer = setTimeout(closeDetails, 160); });
       card.addEventListener('focus', () => showDetails(card,b));

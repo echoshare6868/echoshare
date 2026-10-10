@@ -35,7 +35,7 @@ To customize effects, edit the final Tome Vault CSS section in `style.css`. Effe
 
 ## Optional hover sound
 
-In `badges/badge-system.js`, set `playHoverSound: true` to enable per-tome `hoverSoundUri` or the global `hoverSoundUri`. Browser audio rules may require the user to interact with the page first.
+Per-tome hover audio is enabled by default. Both `hoverSoundUri` and the shorter `hoverSound` property are supported. Browsers may block sound until you click or press a key on the page once. Browser audio rules may require the user to interact with the page first.
 
 ## Scripts
 
@@ -46,3 +46,9 @@ In `badges/badge-system.js`, set `playHoverSound: true` to enable per-tome `hove
 ## Verify
 
 Run `node --check badges/custom-tomes.js`, `node --check badges/badge-system.js`, `node --check badges/badge-ui.js`, `node --check script.js`, and `node --check server.js`. Then run the site and test local and remote static/GIF images.
+
+## Visual customization studio
+
+Open the Tome Vault and press **⚙ CUSTOMIZE** to open the live settings studio. It supports independent colors for cards, card text, vault title, rarity labels, borders, hover glow, detail panel, and vault accents; card height and roundness; responsive or fixed gallery columns; image fit; and toggles for visual effects, special rarity animations, hover movement, scan shine, and hover sounds. Changes preview immediately. Press **Save settings** to persist them in this browser, or **Reset defaults** to restore the original style.
+
+Settings are managed separately by `tome-settings.js`. To edit the starting defaults, update its `DEFAULTS` object. Saved settings are local to the browser/device and do not modify source files.

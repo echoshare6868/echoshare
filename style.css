@@ -4385,3 +4385,7 @@ body.tome-detail-open{overflow:hidden}
 @keyframes meme-rainbow-text{to{background-position:250% center}}
 @keyframes meme-rainbow-border{to{filter:hue-rotate(360deg);box-shadow:0 0 24px rgba(180,70,255,.22)}}
 @media(prefers-reduced-motion:reduce){.badge-card.rarity-fg,.badge-detail-popover.rarity-fg,.badge-card.rarity-fg .badge-card-rarity,.badge-detail-popover.rarity-fg .badge-rarity,.badge-card.rarity-meme-x,.badge-detail-popover.rarity-meme-x,.badge-card.rarity-meme-x .badge-card-rarity,.badge-detail-popover.rarity-meme-x .badge-rarity{animation:none!important}}
+
+/* Custom tome image loading fallback and optional lore block. */
+.badge-image-missing{display:grid;place-items:center;width:100%;height:100%;padding:8px;color:#a9a1b4;font-size:9px;line-height:1.4;letter-spacing:.12em;text-align:center;border:1px dashed rgba(255,255,255,.18);border-radius:10px}
+.tome-lore{padding-top:8px;border-top:1px solid rgba(255,255,255,.07);font-style:italic;color:#a9a1b4!important}

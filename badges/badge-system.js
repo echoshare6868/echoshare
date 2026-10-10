@@ -11,12 +11,17 @@
   const badges = customTomes.map((b, i) => ({
     id: b.id || `custom-tome-${i + 1}`,
     name: 'Untitled Tome', rarity: 'Common', category: 'Custom',
-    description: '', howToEarn: '', imageUri: '', hoverSoundUri: '', customClass: '',
-    ...b
+    description: '', lore: '', howToEarn: '', imageUri: '', hoverSoundUri: '', customClass: '',
+    ...b,
+    // Backwards-compatible aliases used by custom-tomes.js examples.
+    imageUri: b.imageUri || b.image || '',
+    hoverSoundUri: b.hoverSoundUri || b.hoverSound || '',
+    howToEarn: b.howToEarn || b.unlockCondition || '',
+    lore: b.lore || ''
   }));
   window.ECHO_BADGE_CONFIG = window.ECHO_BADGE_CONFIG || {
     badges,
-    settings:{showLockedBadges:true,playHoverSound:false,hoverSoundUri:'',columns:'auto',showDescription:true,showHowToEarn:true}
+    settings:{showLockedBadges:true,playHoverSound:true,hoverSoundUri:'',columns:'auto',showDescription:true,showHowToEarn:true}
   };
   window.EchoBadgeSystem = {
     getBadges(){return Array.isArray(window.ECHO_BADGE_CONFIG.badges)?window.ECHO_BADGE_CONFIG.badges:[];},
@@ -24,6 +29,6 @@
     setBadges(next){window.ECHO_BADGE_CONFIG.badges=next;window.dispatchEvent(new CustomEvent('echo:badges-updated'));},
     updateBadge(id, patch){const next=this.getBadges().map(b=>b.id===id?{...b,...patch}:b);this.setBadges(next);},
     // Add a badge with a custom image URI, rarity, description and optional hover sound URI.
-    addBadge(badge){this.setBadges([...this.getBadges(),{id:badge.id||`custom-${Date.now()}`,name:'Custom Badge',rarity:'Common',description:'',howToEarn:'',imageUri:'',hoverSoundUri:'',...badge}]);}
+    addBadge(badge){this.setBadges([...this.getBadges(),{id:badge.id||`custom-${Date.now()}`,name:'Custom Badge',rarity:'Common',description:'',lore:'',howToEarn:'',imageUri:badge.imageUri||badge.image||'',hoverSoundUri:badge.hoverSoundUri||badge.hoverSound||'',...badge}]);}
   };
 })();
