@@ -18,6 +18,52 @@
     if (!src) return;
     try { if (audio) { audio.pause(); audio.currentTime = 0; } audio = new Audio(src); audio.volume = .35; audio.play().catch(() => {}); } catch (_) {}
   }
+  // Per-tome appearance is authored directly on each entry in custom-tomes.js.
+  // Values are CSS custom properties so each card and its detail panel can be styled independently.
+  function appearanceStyle(b) {
+    const a = b.appearance || b.style || {};
+    const color = v => typeof v === 'string' && v.trim() && !/[;{}<>]/.test(v) ? v.trim() : '';
+    const num = (v, min, max) => { const n = Number(v); return Number.isFinite(n) ? Math.max(min, Math.min(max, n)) : null; };
+    const set = (key, value) => { if (value !== '') vars.push(`${key}:${value}`); };
+    const vars = [];
+    const colors = {
+      '--tome-custom-card-bg': a.cardBackground, '--tome-custom-card-hover': a.cardHoverBackground,
+      '--tome-custom-text': a.textColor, '--tome-custom-name-color': a.nameColor,
+      '--tome-custom-rarity-color': a.rarityColor, '--tome-custom-category-color': a.categoryColor,
+      '--tome-custom-border': a.borderColor, '--tome-custom-border-hover': a.borderHoverColor,
+      '--tome-custom-glow-color': a.glowColor, '--tome-custom-name-glow-color': a.nameGlowColor,
+      '--tome-custom-rarity-glow-color': a.rarityGlowColor, '--tome-custom-image-glow-color': a.imageGlowColor,
+      '--tome-custom-detail-bg': a.detailBackground, '--tome-custom-detail-text': a.detailTextColor,
+      '--tome-custom-detail-border': a.detailBorderColor, '--tome-custom-detail-title': a.detailTitleColor,
+      '--tome-custom-detail-kicker': a.detailKickerColor, '--tome-custom-detail-glow-color': a.detailGlowColor,
+      '--tome-custom-detail-image-bg': a.detailImageBackground, '--tome-custom-detail-section': a.detailSectionColor
+    };
+    Object.entries(colors).forEach(([k,v]) => set(k, color(v)));
+    const numbers = { '--tome-custom-border-width': ['borderWidth',0,12,'px'], '--tome-custom-radius':['radius',0,48,'px'],
+      '--tome-custom-glow-strength':['glowStrength',0,1,''], '--tome-custom-name-glow-strength':['nameGlowStrength',0,1,''],
+      '--tome-custom-rarity-glow-strength':['rarityGlowStrength',0,1,''], '--tome-custom-image-glow-strength':['imageGlowStrength',0,1,''],
+      '--tome-custom-detail-radius':['detailRadius',0,48,'px'], '--tome-custom-detail-border-width':['detailBorderWidth',0,12,'px'],
+      '--tome-custom-detail-glow-strength':['detailGlowStrength',0,1,''] };
+    Object.entries(numbers).forEach(([k,[prop,min,max,unit]]) => { const n=num(a[prop],min,max); if(n!==null) set(k,`${n}${unit}`); });
+    const shadow = v => color(v);
+    set('--tome-custom-shadow', shadow(a.shadow)); set('--tome-custom-hover-shadow', shadow(a.hoverShadow)); set('--tome-custom-detail-shadow', shadow(a.detailShadow));
+    if (a.imageFit === 'cover' || a.imageFit === 'contain') set('--tome-custom-image-fit', a.imageFit);
+    if (a.cardAnimation && typeof a.cardAnimation === 'string' && !/[<>;]/.test(a.cardAnimation)) set('--tome-custom-card-animation', a.cardAnimation);
+    if (a.nameAnimation && typeof a.nameAnimation === 'string' && !/[<>;]/.test(a.nameAnimation)) set('--tome-custom-name-animation', a.nameAnimation);
+    if (a.rarityAnimation && typeof a.rarityAnimation === 'string' && !/[<>;]/.test(a.rarityAnimation)) set('--tome-custom-rarity-animation', a.rarityAnimation);
+    if (a.detailImageFit === 'cover' || a.detailImageFit === 'contain') set('--tome-custom-detail-image-fit', a.detailImageFit);
+    const glow = (keyColor,keyStrength,maxBlur=28) => { const c=color(a[keyColor]); const n=num(a[keyStrength],0,1); return c && n!==null ? `0 0 ${Math.round(n*maxBlur)}px ${c}` : ''; };
+    set('--tome-custom-name-glow', glow('nameGlowColor','nameGlowStrength',22));
+    set('--tome-custom-rarity-glow', glow('rarityGlowColor','rarityGlowStrength',22));
+    const gc = color(a.glowColor), gs = num(a.glowStrength,0,1);
+    if (gc && gs !== null) set('--tome-custom-glow-shadow', gs ? `0 0 ${Math.round(gs*38)}px ${gc}` : 'none');
+    const igc = color(a.imageGlowColor), igs = num(a.imageGlowStrength,0,1);
+    if (igc && igs !== null) set('--tome-custom-image-glow', igs ? `drop-shadow(0 0 ${Math.round(igs*22)}px ${igc})` : 'none');
+    const dgc = color(a.detailGlowColor), dgs = num(a.detailGlowStrength,0,1);
+    if (dgc && dgs !== null) set('--tome-custom-detail-glow-shadow', dgs ? `0 0 ${Math.round(dgs*42)}px ${dgc}` : 'none');
+    if (a.disableRarityAnimation === true || a.animation === 'none') set('--tome-custom-disable-rarity-animation','1');
+    return vars.join(';');
+  }
   function details(b) {
     const settings = window.EchoBadgeSystem.getSettings();
     return `<div class="tome-detail-head"><div class="badge-detail-art"><img src="${esc(b.imageUri || '')}" alt=""></div><button type="button" class="tome-detail-close" aria-label="Close tome details">×</button></div><div class="badge-detail-copy"><span class="badge-detail-kicker">TOME INTELLIGENCE // ${esc(b.category || 'ARCHIVE')}</span><h3>${esc(b.name || 'Unknown Tome')}</h3><span class="badge-rarity rarity-${rarityClass(b.rarity)}">${esc(b.rarity || 'Common')}</span>${settings.showDescription !== false ? `<p>${esc(b.description || 'No description has been configured yet.')}</p>${b.lore ? `<p class="tome-lore">${esc(b.lore)}</p>` : ''}` : ''}${settings.showHowToEarn !== false ? `<div class="badge-howto"><b>HOW TO DISCOVER</b><p>${esc(b.howToEarn || 'Discovery record not configured.')}</p></div>` : ''}<div class="tome-detail-meta"><span>ARCHIVE RECORD</span><code>${esc(b.id || 'CUSTOM')}</code></div></div>`;
@@ -49,7 +95,7 @@
     if (!force && activeCard === card) return;
     closeDetails(); activeCard = card; activeBadge = badge;
     card.classList.add('badge-selected'); card.setAttribute('aria-expanded', 'true');
-    const panel = document.createElement('aside'); panel.className = `badge-detail-popover rarity-${rarityClass(badge.rarity)}`;
+    const panel = document.createElement('aside'); panel.className = `badge-detail-popover rarity-${rarityClass(badge.rarity)}`; panel.style.cssText = appearanceStyle(badge); if (badge.appearance?.disableRarityAnimation === true || badge.appearance?.animation === 'none') panel.dataset.tomeAnimation = 'none'; if (badge.appearance?.cardAnimation || badge.appearance?.nameAnimation || badge.appearance?.rarityAnimation) panel.dataset.tomeCustomAnimation = 'true';
     panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', `${badge.name || 'Tome'} details`); panel.innerHTML = details(badge);
     document.body.appendChild(panel); positionPanel(panel, card); playSound(badge);
     panel.querySelector('.tome-detail-close')?.addEventListener('click', closeDetails);
@@ -80,7 +126,7 @@
     else if (sort?.value === 'rarity') list.sort((a,b) => { const ai=rarityOrder.indexOf(String(a.rarity).toLowerCase()), bi=rarityOrder.indexOf(String(b.rarity).toLowerCase()); return (bi < 0 ? 99 : bi) - (ai < 0 ? 99 : ai); });
     if (count) count.textContent = String(badges.length).padStart(2,'0');
     closeDetails();
-    gallery.innerHTML = list.map((b,i) => `<button type="button" class="badge-card rarity-${rarityClass(b.rarity)} ${esc(b.customClass || '')}" data-badge-id="${esc(b.id)}" aria-expanded="false" style="--badge-index:${i}"><span class="badge-card-scan" aria-hidden="true"></span><span class="badge-art">${b.imageUri ? `<img src="${esc(b.imageUri)}" alt="" loading="lazy">` : '<span class="badge-fallback">✦</span>'}</span><span class="badge-card-name">${esc(b.name || 'Unknown Tome')}</span><span class="badge-card-rarity">${esc(b.rarity || 'Common')}</span><span class="badge-card-category">${esc(b.category || 'ARCHIVE')}</span><span class="badge-card-action">VIEW RECORD <span aria-hidden="true">↗</span></span></button>`).join('') || '<div class="badge-empty">NO TOME RECORDS MATCH THIS SEARCH</div>';
+    gallery.innerHTML = list.map((b,i) => `<button type="button" class="badge-card rarity-${rarityClass(b.rarity)} ${esc(b.customClass || '')}" data-badge-id="${esc(b.id)}" aria-expanded="false" style="--badge-index:${i};${appearanceStyle(b)}" ${b.appearance?.disableRarityAnimation === true || b.appearance?.animation === 'none' ? 'data-tome-animation="none"' : ''} ${b.appearance?.cardAnimation || b.appearance?.nameAnimation || b.appearance?.rarityAnimation ? 'data-tome-custom-animation="true"' : ''}><span class="badge-card-scan" aria-hidden="true"></span><span class="badge-art">${b.imageUri ? `<img src="${esc(b.imageUri)}" alt="" loading="lazy">` : '<span class="badge-fallback">✦</span>'}</span><span class="badge-card-name">${esc(b.name || 'Unknown Tome')}</span><span class="badge-card-rarity">${esc(b.rarity || 'Common')}</span><span class="badge-card-category">${esc(b.category || 'ARCHIVE')}</span><span class="badge-card-action">VIEW RECORD <span aria-hidden="true">↗</span></span></button>`).join('') || '<div class="badge-empty">NO TOME RECORDS MATCH THIS SEARCH</div>';
     gallery.querySelectorAll('.badge-card').forEach(card => {
       const b = badges.find(x => String(x.id) === card.dataset.badgeId); if (!b) return;
       card.querySelector('.badge-art img')?.addEventListener('error', () => { const art = card.querySelector('.badge-art'); if (art) art.innerHTML = '<span class="badge-image-missing">IMAGE<br>UNAVAILABLE</span>'; });

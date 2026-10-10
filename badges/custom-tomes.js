@@ -1,31 +1,171 @@
 /*
- * TOME VAULT — YOUR CUSTOM TOMES
- * Add, remove, duplicate, or edit entries in this array. Keep commas between entries.
- * imageUri accepts a site path, an https URL, a data URI, PNG, JPG, WEBP, SVG, or GIF.
- * Put local images in a folder such as badges/images/ and use e.g. "badges/images/my-tome.gif".
- * Optional hoverSoundUri accepts an audio URL/path. Sound is off globally until enabled in settings.
+ * TOME VAULT — CUSTOM TOMES
+ * ------------------------------------------------------------------
+ * Add/remove tomes in this array. Every tome can have its OWN appearance.
+ * Image/audio paths are relative to the website root; GIFs and still images work.
+ * Omit any appearance option to inherit the normal vault default / rarity look.
+ *
+ * PER-TOME appearance options:
+ * cardBackground, cardHoverBackground, textColor, nameColor, rarityColor,
+ * categoryColor, borderColor, borderHoverColor, borderWidth, radius,
+ * shadow, hoverShadow, glowColor, glowStrength (0-1),
+ * nameGlowColor, nameGlowStrength (0-1), rarityGlowColor, rarityGlowStrength (0-1),
+ * imageGlowColor, imageGlowStrength (0-1), imageFit ('contain'|'cover'),
+ * detailBackground, detailTextColor, detailBorderColor, detailTitleColor,
+ * detailKickerColor, detailSectionColor, detailImageBackground, detailImageFit,
+ * detailRadius, detailBorderWidth, detailShadow, detailGlowColor, detailGlowStrength,
+ * disableRarityAnimation: true (keeps rarity colors, disables its animation),
+ * animation: 'none' (alias for disableRarityAnimation),
+ * cardAnimation / nameAnimation / rarityAnimation: optional CSS animation values.
+ *
+ * Example animation: 'pulse 1.5s ease-in-out infinite' (define @keyframes pulse in style.css).
  */
 window.ECHO_CUSTOM_TOMES = [
-{
-  id: "forbidden-glitch",
-  name: "TEARS OF THE WEEPING",
-  image: "tomes/Tears.gif",
-  rarity: "FG!",
-  category: "Custom!",
-  description: "This was made to honor Kuya for the pain that he had to enmdure to being with us today.",
-  lore: "There's no lore behind TEARS OF THE WEEPING",
-  unlockCondition: "Can be given by Kuya.",
-  hoverSound: "tomes/vidu-video-3500559398996746 (1).mp3"
-},
-{
-  id: "the-forbidden-Cat",
-  name: "FALP THE CAT",
-  image: "tomes/cat.png",
-  rarity: "MEME-X!",
-  category: "WTF IS THIS.",
-  description: "This dumvb ass cat gives you're kishin 80 Cosma per min.",
-  lore: "He was once a normal cat who now has 5,000 caes of rabies Which made him look stupid.",
-  unlockCondition: "Can be Tamed only on spooky J,S weeks or halloween.",
-  hoverSound: "tomes/hoversound.mp3"
-}
+  {
+    id: "forbidden-glitch",
+    name: "TEARS OF THE WEEPING",
+    image: "tomes/Tears.gif",
+    rarity: "FG!",
+    category: "Custom!",
+    description: "This was made to honor Kuya for the pain that he had to endure to be with us today.",
+    lore: "There's no lore behind TEARS OF THE WEEPING.",
+    unlockCondition: "Can be given by Kuya.",
+    hoverSound: "tomes/vidu-video-3500559398996746 (1).mp3",
+    appearance: {
+      // This tome's individual look. Change any values or delete this block to use defaults.
+      cardBackground: "#160608",
+      cardHoverBackground: "#24070c",
+      textColor: "#fff0f0",
+      nameColor: "#ffffff",
+      rarityColor: "#ff303b",
+      categoryColor: "#ff9aa2",
+      borderColor: "#8f1420",
+      borderHoverColor: "#ff202d",
+      borderWidth: 1,
+      radius: 18,
+      shadow: "0 10px 28px rgba(0,0,0,.24)",
+      hoverShadow: "0 14px 36px rgba(0,0,0,.35)",
+      glowColor: "#ff1010",
+      glowStrength: 0.85,
+      nameGlowColor: "#ff2525",
+      nameGlowStrength: 0.25,
+      rarityGlowColor: "#ff2020",
+      rarityGlowStrength: 0.95,
+      imageGlowColor: "#ff2020",
+      imageGlowStrength: 0.35,
+      imageFit: "contain",
+      detailBackground: "#100609",
+      detailTextColor: "#fff0f0",
+      detailBorderColor: "#ff202d",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#ff6b77",
+      detailSectionColor: "#ff858c",
+      detailImageBackground: "#19090c",
+      detailImageFit: "contain",
+      detailRadius: 22,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.7)",
+      detailGlowColor: "#ff1010",
+      detailGlowStrength: 0.3,
+      disableRarityAnimation: false
+    }
+  },
+  {
+    id: "the-forbidden-cat",
+    name: "FALP THE CAT",
+    image: "tomes/cat.png",
+    rarity: "MEME-X!",
+    category: "WTF IS THIS.",
+    description: "This dumb cat gives you 80 Cosma per minute.",
+    lore: "He was once a normal cat who now has 5,000 cases of rabies, which made him look stupid.",
+    unlockCondition: "Can be tamed only on spooky J.S. weeks or Halloween.",
+    hoverSound: "tomes/hoversound.mp3",
+    appearance: {
+      // A completely different look for this card and its details panel.
+      cardBackground: "#10091c",
+      cardHoverBackground: "#1c1030",
+      textColor: "#fffaff",
+      nameColor: "#fffaff",
+      rarityColor: "#ff70df",
+      categoryColor: "#b9a5d8",
+      borderColor: "#5c347b",
+      borderHoverColor: "#ff54e8",
+      borderWidth: 1,
+      radius: 14,
+      shadow: "0 8px 24px rgba(0,0,0,.25)",
+      hoverShadow: "0 16px 42px rgba(0,0,0,.4)",
+      glowColor: "#b84cff",
+      glowStrength: 0.65,
+      nameGlowColor: "#ff54e8",
+      nameGlowStrength: 0.45,
+      rarityGlowColor: "#ff54e8",
+      rarityGlowStrength: 0.9,
+      imageGlowColor: "#ff54e8",
+      imageGlowStrength: 0.7,
+      imageFit: "contain",
+      detailBackground: "#0d0815",
+      detailTextColor: "#f9eaff",
+      detailBorderColor: "#d94cff",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#4ce8cb",
+      detailSectionColor: "#f17bff",
+      detailImageBackground: "#160d22",
+      detailImageFit: "contain",
+      detailRadius: 24,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.72)",
+      detailGlowColor: "#b84cff",
+      detailGlowStrength: 0.45,
+      disableRarityAnimation: false
+    }
+  },
+  {
+    id: "the-forbidden-cat",
+    name: "FALP THE CAT",
+    image: "tomes/Pi7_Gif.gif",
+    rarity: "MEME-X!",
+    category: "JJX!",
+    description: "This Puck unlocks you spooky week  every weekend withoutt waiting on halloween!",
+    lore: "He's a kishin friendly puck that sleeps on top of you're kishin head or floats next to you",
+    unlockCondition: "Can be tamed only on spooky J.S. weeks or Halloween.",
+    hoverSound: "tomes/puck.mp3",
+    appearance: {
+      // A completely different look for this card and its details panel.
+      cardBackground: "#10091c",
+      cardHoverBackground: "#1c1030",
+      textColor: "#b094ff",
+      nameColor: "#fffd94",
+      rarityColor: "#fffd94",
+      categoryColor: "#ffffff",
+      borderColor: "#fffd94",
+      borderHoverColor: "#ffffff",
+      borderWidth: 1,
+      radius: 14,
+      shadow: "0 8px 24px rgba(0,0,0,.25)",
+      hoverShadow: "0 16px 42px rgba(0,0,0,.4)",
+      glowColor: "#fffd94",
+      glowStrength: 0.65,
+      nameGlowColor: "#b094ff",
+      nameGlowStrength: 0.45,
+      rarityGlowColor: "#fffd94",
+      rarityGlowStrength: 0.9,
+      imageGlowColor: "#fffd94",
+      imageGlowStrength: 0.7,
+      imageFit: "contain",
+      detailBackground: "#0d0815",
+      detailTextColor: "#f9eaff",
+      detailBorderColor: "#d94cff",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#4ce8cb",
+      detailSectionColor: "#f17bff",
+      detailImageBackground: "#160d22",
+      detailImageFit: "contain",
+      detailRadius: 24,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.72)",
+      detailGlowColor: "#b84cff",
+      detailGlowStrength: 0.45,
+      disableRarityAnimation: false
+    }
+  }
 ];
