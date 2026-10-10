@@ -28,7 +28,7 @@ let loadingTimer = null;
 const backgroundNoise = document.getElementById("backgroundNoise");
 const clickSound = document.getElementById("clickSound");
 const CLICK_SOUND_PATH = "sounds/Goodjob!.mp3";
-if (backgroundNoise) backgroundNoise.src = "sounds/background-noise.mp3.mp3";
+if (backgroundNoise) backgroundNoise.src = "sounds/oceans.mp3";
 if (clickSound) clickSound.src = CLICK_SOUND_PATH;
 let backgroundNoiseStarted = false;
 
