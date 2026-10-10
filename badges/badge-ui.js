@@ -6,7 +6,7 @@
   if (!gallery || !window.EchoBadgeSystem) return;
   let activeCard = null, activeBadge = null, audio = null, closeTimer = null;
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const rarityClass = value => String(value || 'common').toLowerCase().replace(/[^a-z0-9-]/g, '-');
+  const rarityClass = value => String(value || 'common').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
   const rarityOrder = ['common','uncommon','rare','epic','legendary','mythic','singularity'];
   function playSound(badge) {
     const settings = window.EchoBadgeSystem.getSettings();
@@ -56,6 +56,12 @@
     if (force || !matchMedia('(hover: hover)').matches) panel.querySelector('.tome-detail-close')?.focus({preventScroll:true});
   }
   function updateCategories(badges) {
+    if (rarity) {
+      const selectedRarity = rarity.value || 'all';
+      const rarities = [...new Set(badges.map(b => String(b.rarity || 'Common')).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+      rarity.innerHTML = '<option value="all">ALL RARITIES</option>' + rarities.map(v => `<option value="${esc(v)}">${esc(v.toUpperCase())}</option>`).join('');
+      rarity.value = rarities.some(v => v.toLowerCase() === selectedRarity.toLowerCase()) ? selectedRarity : 'all';
+    }
     if (!category) return;
     const current = category.value || 'all';
     const values = [...new Set(badges.map(b => b.category).filter(Boolean))].sort((a,b) => a.localeCompare(b));
@@ -67,7 +73,7 @@
     const q = (search?.value || '').trim().toLowerCase(), r = rarity?.value || 'all', c = category?.value || 'all';
     let list = badges.filter(b => (!q || [b.name,b.description,b.rarity,b.category,b.howToEarn,b.id].join(' ').toLowerCase().includes(q)) && (r === 'all' || String(b.rarity).toLowerCase() === r.toLowerCase()) && (c === 'all' || b.category === c));
     if (sort?.value === 'name') list.sort((a,b) => String(a.name).localeCompare(String(b.name)));
-    else if (sort?.value === 'rarity') list.sort((a,b) => rarityOrder.indexOf(String(b.rarity).toLowerCase()) - rarityOrder.indexOf(String(a.rarity).toLowerCase()));
+    else if (sort?.value === 'rarity') list.sort((a,b) => { const ai=rarityOrder.indexOf(String(a.rarity).toLowerCase()), bi=rarityOrder.indexOf(String(b.rarity).toLowerCase()); return (bi < 0 ? 99 : bi) - (ai < 0 ? 99 : ai); });
     if (count) count.textContent = String(badges.length).padStart(2,'0');
     closeDetails();
     gallery.innerHTML = list.map((b,i) => `<button type="button" class="badge-card rarity-${rarityClass(b.rarity)} ${esc(b.customClass || '')}" data-badge-id="${esc(b.id)}" aria-expanded="false" style="--badge-index:${i}"><span class="badge-card-scan" aria-hidden="true"></span><span class="badge-art">${b.imageUri ? `<img src="${esc(b.imageUri)}" alt="" loading="lazy">` : '<span class="badge-fallback">✦</span>'}</span><span class="badge-card-name">${esc(b.name || 'Unknown Tome')}</span><span class="badge-card-rarity">${esc(b.rarity || 'Common')}</span><span class="badge-card-category">${esc(b.category || 'ARCHIVE')}</span><span class="badge-card-action">VIEW RECORD <span aria-hidden="true">↗</span></span></button>`).join('') || '<div class="badge-empty">NO TOME RECORDS MATCH THIS SEARCH</div>';

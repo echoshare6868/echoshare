@@ -1,48 +1,48 @@
-# ECHO//SHARE Badge Vault
+# ECHO//SHARE — Tome Vault
 
-The badge system is split into two files so it stays easy to customize:
+The Tome Vault ships with **no preset badges**. Your own collection lives in one simple file: `badges/custom-tomes.js`. The rendering and behavior are kept separate.
 
-- `badges/badge-system.js` — badge data, image URIs, rarity, descriptions, unlock info, and optional hover sounds.
-- `badges/badge-ui.js` — gallery rendering, search/rarity filters, hover/tap details, effects, and the developer-message overlay.
+## Add a custom tome
 
-## Customize badges
-
-Edit `window.ECHO_BADGE_CONFIG` in `badges/badge-system.js`. Each badge supports:
-
-- `imageUri`: image URL or site-relative path (SVG data URIs are also supported).
-- `hoverSoundUri`: optional audio URL/path for that badge.
-- `rarity`, `category`, `description`, `howToEarn`, `customClass`.
-
-Global options in `settings` include `playHoverSound`, `hoverSoundUri`, `showDescription`, and `showHowToEarn`. Hover audio is off by default. Browsers require a user gesture before audio can play.
-
-You can also add/update badges from another script after the page loads:
+1. Put the image in `badges/images/` (create the folder if needed), or use a direct HTTPS image URL.
+2. Open `badges/custom-tomes.js`.
+3. Add an object inside `window.ECHO_CUSTOM_TOMES`.
+4. Save and refresh. GIF, PNG, JPG, WEBP, SVG and browser-supported image URLs work through the normal `<img>` element.
 
 ```js
-EchoBadgeSystem.addBadge({
-  id: "my-custom-badge",
-  name: "My Custom Badge",
-  rarity: "Epic",
-  imageUri: "pngs/my-badge.webp",
-  description: "What this badge represents.",
-  howToEarn: "How a user unlocks it.",
-  hoverSoundUri: "sounds/badge-hover.mp3"
-});
+{
+  id: "my-first-tome",             // unique, URL-friendly ID
+  name: "My First Tome",
+  imageUri: "badges/images/my-first-tome.gif",
+  rarity: "MEME-X!",                // any label you want
+  category: "Custom",
+  description: "What the tome means.",
+  howToEarn: "How it is discovered.",
+  hoverSoundUri: "sounds/tome-hover.mp3", // optional
+  customClass: ""                  // optional extra CSS class
+}
 ```
 
-## GIF vault fix
+Separate entries with commas. Remove an entry to remove that tome. IDs must be unique. For local files, paths are relative to the site root. Remote images must allow browser access; use a direct image URL, not a webpage URL.
 
-The GIF API now reads the existing top-level `gifs_emojis/` directory and returns usable image paths. The client keeps the actual filename/URL (including file extension) rather than converting it into a path that could not resolve. Keep image files in `gifs_emojis/`.
+## Built-in custom rarity effects
 
-## Commit checklist
+- `FG!` — flashing red/black aura with a jittering rarity label.
+- `MEME-X!` — animated hyper-rainbow text and glow.
+- Every other rarity label works automatically and gets a matching normalized CSS class for your own styling.
 
-- Run `node --check script.js`
-- Run `node --check server.js`
-- Run `node --check badges/badge-system.js`
-- Run `node --check badges/badge-ui.js`
-- Run `npm start` and verify the GIF vault and badge gallery in the browser.
+To customize effects, edit the final Tome Vault CSS section in `style.css`. Effects respect `prefers-reduced-motion`.
 
-## Tome Vault UI updates
+## Optional hover sound
 
-The archive is titled **Tome Vault** in the site UI. `badge-ui.js` renders its gallery and filters, and portals the details panel directly to `document.body` so parent grid/card overflow cannot clip it. Desktop details reposition within viewport bounds; touch/mobile details use a centered, scrollable panel. Search includes descriptions and unlock lore; category and rarity filters and sorting are available.
+In `badges/badge-system.js`, set `playHoverSound: true` to enable per-tome `hoverSoundUri` or the global `hoverSoundUri`. Browser audio rules may require the user to interact with the page first.
 
-To customize options, edit `settings` in `badge-system.js` (`showDescription`, `showHowToEarn`, `playHoverSound`, and `hoverSoundUri`) or add/edit badge fields (`imageUri`, `hoverSoundUri`, `rarity`, `category`, `description`, `howToEarn`).
+## Scripts
+
+- `badges/custom-tomes.js` — **your editable tome collection**.
+- `badges/badge-system.js` — config accessors and update helpers.
+- `badges/badge-ui.js` — gallery, filters, animations, hover/tap detail panel.
+
+## Verify
+
+Run `node --check badges/custom-tomes.js`, `node --check badges/badge-system.js`, `node --check badges/badge-ui.js`, `node --check script.js`, and `node --check server.js`. Then run the site and test local and remote static/GIF images.

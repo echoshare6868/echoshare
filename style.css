@@ -4353,3 +4353,35 @@ body.tome-detail-open{overflow:hidden}
 @media(min-width:1500px){.badge-gallery{grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}.badge-card{min-height:248px}.badge-art{width:132px;height:132px}}
 @media(max-width:720px){.badge-showcase{width:calc(100vw - 20px);margin:28px auto 40px;padding:20px 14px;border-radius:18px}.badge-showcase-top{gap:14px;margin-bottom:22px}.badge-showcase-top h2{font-size:clamp(32px,9vw,46px)}.badge-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.badge-card{min-height:190px;padding:13px 8px 11px;border-radius:14px}.badge-art{width:clamp(72px,22vw,96px);height:clamp(72px,22vw,96px)}.badge-card-name{font-size:12px}.badge-card-action{font-size:7px}.badge-gallery-toolbar input,.badge-gallery-toolbar select{flex:1 1 calc(50% - 8px);min-width:0;width:100%;font-size:10px}.badge-gallery-toolbar>span{width:100%;margin:0 0 2px}.badge-detail-popover.tome-detail-mobile{grid-template-columns:82px minmax(0,1fr);gap:13px}.badge-detail-popover.tome-detail-mobile .badge-detail-art{width:76px;height:76px}.badge-detail-copy h3{font-size:19px}.badge-detail-copy>p,.badge-howto p{font-size:12px}.tome-detail-meta{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.badge-detail-popover{animation:none!important}.badge-card-action,.tome-detail-close{transition:none!important}}
+
+
+/* ===== Tome Vault: refined footprint + owner-defined rarity effects ===== */
+.badge-showcase{width:min(1240px,calc(100vw - 48px));padding:clamp(22px,2.8vw,36px);margin:clamp(28px,4vw,54px) auto 52px;border-radius:22px}
+.badge-showcase-top{margin-bottom:24px;gap:20px}
+.badge-showcase-top h2{font-size:clamp(32px,3.8vw,48px);letter-spacing:.065em}
+.badge-showcase-top p{font-size:14px;max-width:590px}
+.badge-vault-count{min-width:108px;padding:12px 16px;border-radius:15px}
+.badge-vault-count strong{font-size:27px}
+.badge-gallery-toolbar{margin-bottom:18px;padding:10px;gap:9px}
+.badge-gallery-toolbar input,.badge-gallery-toolbar select{min-height:40px;padding:9px 11px}
+.badge-gallery{grid-template-columns:repeat(auto-fill,minmax(min(100%,158px),1fr));gap:13px}
+.badge-card{min-height:190px;padding:15px 12px 12px;border-radius:16px;gap:8px}
+.badge-art{width:94px;height:94px}
+.badge-card-name{font-size:13px}
+.badge-card-rarity{font-size:9px;letter-spacing:.15em}
+.badge-card-action{padding-top:7px}
+@media(min-width:1500px){.badge-showcase{width:min(1240px,calc(100vw - 64px))}.badge-gallery{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.badge-card{min-height:190px}.badge-art{width:94px;height:94px}}
+@media(max-width:720px){.badge-showcase{width:calc(100vw - 20px);padding:18px 12px;margin:26px auto 36px}.badge-showcase-top h2{font-size:clamp(30px,8vw,40px)}.badge-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.badge-card{min-height:164px;padding:12px 7px 10px}.badge-art{width:clamp(66px,19vw,82px);height:clamp(66px,19vw,82px)}}
+/* FG! — high-alert red/black flicker. Keep motion scoped to this rarity only. */
+.badge-card.rarity-fg,.badge-detail-popover.rarity-fg{--rarity-color:#ff202d;--rarity-glow:rgba(255,0,22,.56);border-color:#ff202d;background-image:repeating-linear-gradient(135deg,rgba(255,0,20,.075) 0 3px,transparent 3px 8px),radial-gradient(ellipse at 50% 0%,rgba(255,0,20,.18),transparent 70%),linear-gradient(150deg,#100609,#050507 72%);animation:badge-rise .55s both,fg-danger-pulse 1.2s steps(2,end) infinite}
+.badge-card.rarity-fg .badge-card-rarity,.badge-detail-popover.rarity-fg .badge-rarity{color:#ff3542;text-shadow:0 0 9px #f00;animation:fg-letter-jitter .16s steps(2,end) infinite}
+.badge-detail-popover.rarity-fg{box-shadow:0 0 0 1px #ff1829,0 0 32px rgba(255,0,20,.45),0 24px 80px #000}
+@keyframes fg-danger-pulse{0%,100%{box-shadow:inset 0 0 18px rgba(255,0,20,.09),0 0 10px rgba(255,0,20,.14)}50%{box-shadow:inset 0 0 28px rgba(255,0,20,.22),0 0 24px rgba(255,0,20,.38)}}
+@keyframes fg-letter-jitter{0%{transform:translate(0,0) skewX(0)}25%{transform:translate(-1px,1px) skewX(-4deg)}50%{transform:translate(1px,-1px) skewX(3deg)}75%{transform:translate(1px,0) skewX(-2deg)}100%{transform:translate(0,0) skewX(0)}}
+/* MEME-X! — animated full-spectrum glow without changing the badge image itself. */
+.badge-card.rarity-meme-x,.badge-detail-popover.rarity-meme-x{--rarity-color:#ff75e8;--rarity-glow:rgba(170,80,255,.45);border-color:transparent;background:linear-gradient(#090810,#090810) padding-box,conic-gradient(from var(--meme-angle,0deg),#ff2f92,#ffb52e,#eaff4f,#24ffc8,#3c83ff,#bd48ff,#ff2f92) border-box;animation:badge-rise .55s both,meme-rainbow-border 3.2s linear infinite}
+.badge-card.rarity-meme-x .badge-card-rarity,.badge-detail-popover.rarity-meme-x .badge-rarity{font-weight:900;background:linear-gradient(90deg,#ff4c9b,#ffc34a,#f7ff67,#4affd1,#5d8dff,#d45cff,#ff4c9b);background-size:250% auto;background-clip:text;-webkit-background-clip:text;color:transparent;animation:meme-rainbow-text 2.2s linear infinite}
+.badge-card.rarity-meme-x .badge-art{filter:drop-shadow(0 0 9px rgba(255,75,220,.42))}
+@keyframes meme-rainbow-text{to{background-position:250% center}}
+@keyframes meme-rainbow-border{to{filter:hue-rotate(360deg);box-shadow:0 0 24px rgba(180,70,255,.22)}}
+@media(prefers-reduced-motion:reduce){.badge-card.rarity-fg,.badge-detail-popover.rarity-fg,.badge-card.rarity-fg .badge-card-rarity,.badge-detail-popover.rarity-fg .badge-rarity,.badge-card.rarity-meme-x,.badge-detail-popover.rarity-meme-x,.badge-card.rarity-meme-x .badge-card-rarity,.badge-detail-popover.rarity-meme-x .badge-rarity{animation:none!important}}
