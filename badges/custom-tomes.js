@@ -123,7 +123,7 @@ window.ECHO_CUSTOM_TOMES = [
     id: "the-puckofall-cat",
     name: "PUCK",
     image: "tomes/Pi7_Gif.gif",
-    rarity: "MEME-X!",
+    rarity: "K,J!",
     category: "JJX!",
     description: "This Puck unlocks you spooky week  every weekend withoutt waiting on halloween!",
     lore: "He's a kishin friendly puck that sleeps on top of you're kishin head or floats next to you",
