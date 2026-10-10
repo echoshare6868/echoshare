@@ -120,8 +120,8 @@ window.ECHO_CUSTOM_TOMES = [
     }
   },
   {
-    id: "the-forbidden-cat",
-    name: "FALP THE CAT",
+    id: "the-puckofall-cat",
+    name: "PUCK",
     image: "tomes/Pi7_Gif.gif",
     rarity: "MEME-X!",
     category: "JJX!",
