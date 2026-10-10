@@ -40,3 +40,9 @@ The GIF API now reads the existing top-level `gifs_emojis/` directory and return
 - Run `node --check badges/badge-system.js`
 - Run `node --check badges/badge-ui.js`
 - Run `npm start` and verify the GIF vault and badge gallery in the browser.
+
+## Tome Vault UI updates
+
+The archive is titled **Tome Vault** in the site UI. `badge-ui.js` renders its gallery and filters, and portals the details panel directly to `document.body` so parent grid/card overflow cannot clip it. Desktop details reposition within viewport bounds; touch/mobile details use a centered, scrollable panel. Search includes descriptions and unlock lore; category and rarity filters and sorting are available.
+
+To customize options, edit `settings` in `badge-system.js` (`showDescription`, `showHowToEarn`, `playHoverSound`, and `hoverSoundUri`) or add/edit badge fields (`imageUri`, `hoverSoundUri`, `rarity`, `category`, `description`, `howToEarn`).
