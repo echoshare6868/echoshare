@@ -122,7 +122,7 @@ window.ECHO_CUSTOM_TOMES = [
   {
     id: "the-puckofall-cat",
     name: "PUCK",
-    image: "tomes/Pi7_Gif.gif",
+    image: "tomes/puck.gif",
     rarity: "K,J!",
     category: "JJX!",
     description: "This Puck unlocks you spooky week  every weekend withoutt waiting on halloween!",
