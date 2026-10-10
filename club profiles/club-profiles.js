@@ -1,0 +1,124 @@
+/*
+   ECHO//SHARE CLUB PROFILE DATABASE
+   ---------------------------------
+   Add/edit clubs here. Search them with:
+     club/your-club-name
+     club your-club-name
+
+   Every club can have its own:
+   - profile ID
+   - profile image
+   - custom background
+   - custom music from the main sounds/ folder
+   - followers/supports
+   - tags
+   - bio
+   - optional badge
+
+   Set badge: "" or null when a club should NOT have a badge.
+*/
+
+const ECHO_CLUBS = {
+    "V*PER": {
+        name: "V*PER",
+        id: "CLUB-V*PER-001",
+        image: "pngs/spider.gif",
+        background: "pngs/tokyo-ghoul-rize.gif",
+        music: "sounds/Vipermusic.mp3",
+        followers: "1M",
+        supports: "1.9B",
+        badge: "pngs/SSML.webp",
+        tags: ["P,N", "Dream core"],
+        bio: "I want to ruin you so completely that every other touch you ever feel for the rest of your life will taste like a pale ghost of me.",
+        status: "CLUB",
+        glow: "#ff4039"
+    },
+    "Harnsoi_Kinzo": {
+        name: "Harnsoi_Kinzo",
+        id: "CLUB-Harnsoi_Kinzo-001",
+        image: "pngs/markspfp2.gif",
+        background: "pngs/markpfp.gif",
+        music: "sounds/I ᐸ3 Wealth.mp3",
+        followers: "12,451",
+        supports: "34K EMOJI REACTS, 340,678",
+        badge: "pngs/SSML.webp",
+        tags: ["#Hexxercising", "#Doublehexxed", "#Ascended", "#Occultism","#Cultism" ],
+        bio: "† ₮ⱧɆ ⱧłɆⱤ₳Ɽ₵ⱧɎ ł₴ ₳ ₴₳₵Ɽł₣ł₵Ɇ. † Tyrants bleed. Kings burn. Queens rot. Opposers face total erasure. We invoke the end of the crown. ⛧ 𝖓𝖔 𝖒𝖊𝖗𝖈𝖞 𝖋𝖔𝖗 𝖙𝖍𝖊 𝖍𝖎𝖌𝖍-𝖇𝖔𝖗𝖓 ⛧",
+        status: "Cult",
+        glow: "#ff4039"
+    },
+    "TheHonorOne": {
+        name: "TheHonorOne",
+        id: "CLUB-TheHonorOne-001",
+        image: "pngs/for-honor-knight.gif",
+        background: "pngs/15466.gif",
+        music: "sounds/Oneshot (Hardstyle).mp3",
+        followers: "889K",
+        supports: "8,9T",
+        badge: "gifs_emojis/yousuredog.webp",
+        tags: ["Knights",],
+        bio: "I honor the queen with bloody hands and a sword. For there i shall take my life if it means to serve her.",
+        status: "TheHonor_Family",
+        glow: "#000000"
+    },
+    "HazelsHoneyroom_777": {
+        name: "ℌ𝔞𝔷𝔢𝔩𝔰ℌ𝔬𝔫𝔢𝔶𝔯𝔬𝔬𝔪_777",
+        id: "CLUB-ℌ𝔞𝔷𝔢𝔩𝔰ℌ𝔬𝔫𝔢𝔶𝔯𝔬𝔬𝔪-001",
+        image: "pngs/paswg-scanty-and-kneesocks.gif",
+        background: "pngs/Scanty and Kneesocks.webp",
+        music: "sounds/Agora Hills (TikTok Version) - Doja Cat slowed down + without rap.mp3",
+        followers: "162.3M",
+        supports: "999+ EMOJI REACTS",
+        badge: "gifs_emojis/cri.webp",
+        tags: ["OWNER:🔱HazelsBuckerBun", "CO OWNER:@Tothetidesat12", "34 Workers"],
+        bio: "Contact us for some fun boys<3",
+        status: 'Sexy',
+        glow: "#f73790"
+    },
+   "The_Hons_Family": {
+
+        name: "The_Hons_Family",
+        id: "CLUB-HonsFamily-001",
+        image: "pngs/content.webp",
+        background: "pngs/Redhive.gif",
+        music: "",
+        followers: "920,456k",
+        supports: "Largest Family.",
+        badge: "pngs/SSML.webp",
+        tags: ["27 Mothers", "5 God mothers", "5 Lost childern", "Prime dictator: Salvatore", "60 Death knights"],
+        bio: "The Godfamily",
+        status: "Cult",
+        glow: "#c50000"
+    },
+    "𝙺𝚗𝚘𝚝 & 𝙷𝚘𝚗𝚎𝚢": {
+        name: "𝙺𝚗𝚘𝚝 & 𝙷𝚘𝚗𝚎𝚢",
+        id: "CLUB-𝙺𝚗𝚘𝚝 & 𝙷𝚘𝚗𝚎𝚢-001",
+        image: "pngs/no.jpg",
+        background: "pngs/More.gif",
+        music: "sounds/itookher.mp3",
+        followers: "100,567K",
+        supports: "45Q EMOJI REACTS, 78N Support",
+        badge: "pngs/picgifs-stars-1611814 (1).gif",
+        tags: ["bearagain679","faithsnow.","flexhexxxxx","sigmasigmaboy0451_37846","n_79606","sweetheart_54283","plushiepounder.","malik047595","macboockclubs", "loui08372","hearv_10026","ashentades","domain0425_01367","uturn0192","raven048574","possi_aesthetic","daniela09714","vovla_","v30209","tozi0876"],
+        bio: "The Deeper the love the better we are",
+        status: "Deeper levels club",
+        glow: "#050000"
+    },
+
+      "Sannin no Kyōkyō": {
+        name: "Sannin Family",
+        id: "CLUB-Sannin-001",
+        image: "theadmins/Kurotsume, The First Face.png",
+        background: "theadmins/haunted-house-with-spooky-aesthetic-cinematic-style_23-2151663817.avif",
+        music: "",
+        followers: "3K",
+        supports: "8,9B",
+        badge: "theadmins/Alert.gif",
+        tags: ["1. ADMIN — Kurotsume, The First Face", "2. CO-ADMIN — Mokuren, The Empty Smile", "3. CO-ADMIN — Shigure, The Weeping Horn"],
+        bio: "[This Family should be taken with caution contact for support of this club is a issue.]",
+        status: "Cult",
+        glow: "#000000"
+    }
+};
+
+const ECHO_CLUB_ALIASES = {};
