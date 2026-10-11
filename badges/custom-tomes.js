@@ -171,13 +171,13 @@ window.ECHO_CUSTOM_TOMES = [
   {
     id: "the-calavera-tome",
     name: "CALAVERA",
-    image: "tomes/hoversound.mp3",
+    image: "tomes/calavera.png",
     rarity: "J,S!",
     category: "H.I.T!",
     description: "This Calavera unlocks you spooky week every weekend withoutt waiting on halloween!",
     lore: "He's a dapper, kishin friendly sugar skull that floats next to you or tips his festive top hat while resting on top of you're kishin head.",
     unlockCondition: "Can be tamed only on spooky J.S. weeks or Halloween.",
-    hoverSound: "tomes/",
+    hoverSound: "tomes/hoversound.mp3",
     appearance: {
       // Custom festive Day of the Dead palette matching his purple, gold, and pink design.
       cardBackground: "#0d0214",       // Deepest twilight purple
