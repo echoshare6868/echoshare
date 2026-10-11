@@ -372,7 +372,7 @@ window.ECHO_CUSTOM_TOMES = [
     category: "Darkless halls",
     description: "This Tome Turns you're unhatched kishin into you're very own customizeable skin and rollable stats for you're very own kishin. you give a dup of 5 copies.",
     lore: "PLACEHOLDER_LORE",
-    unlockCondition: "Can be tamed only on Darkless halls market place",
+    unlockCondition: "Can be tamed only on Darkless halls market place.",
     hoverSound: "tomes/shrine.mp3",
     appearance: {
       cardBackground: "#05020a",       // Void black with a hint of midnight violet
