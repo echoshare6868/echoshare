@@ -110,6 +110,16 @@
         textGlowColor: '#ff54e8',
         textGlowStrength: 0.80,
         animation: 'rainbow'         // 'rainbow' or 'none'
+      },
+      'Secret Menu': {
+        textColor: '#fff598',
+        cardBackground: '#fcd569',
+        borderColor: '#fdfcfc',
+        glowColor: '#fcd569',
+        glowStrength: 0.90,
+        textGlowColor: '#fcd569',
+        textGlowStrength: 0.95,
+        animation: 'glitch'          // 'glitch' or 'none'
       }
     }
   };
