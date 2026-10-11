@@ -123,7 +123,7 @@ window.ECHO_CUSTOM_TOMES = [
     id: "the-puckofall-cat",
     name: "PUCK",
     image: "tomes/puck.gif",
-    rarity: "K,J!",
+    rarity: "J,S!",
     category: "JJX!",
     description: "This Puck unlocks you spooky week  every weekend withoutt waiting on halloween!",
     lore: "He's a kishin friendly puck that sleeps on top of you're kishin head or floats next to you",
@@ -165,6 +165,104 @@ window.ECHO_CUSTOM_TOMES = [
       detailShadow: "0 28px 90px rgba(0,0,0,.72)",
       detailGlowColor: "#b84cff",
       detailGlowStrength: 0.45,
+      disableRarityAnimation: false
+    }
+  },
+  {
+    id: "the-calavera-tome",
+    name: "CALAVERA",
+    image: "tomes/hoversound.mp3",
+    rarity: "J,S!",
+    category: "H.I.T!",
+    description: "This Calavera unlocks you spooky week every weekend withoutt waiting on halloween!",
+    lore: "He's a dapper, kishin friendly sugar skull that floats next to you or tips his festive top hat while resting on top of you're kishin head.",
+    unlockCondition: "Can be tamed only on spooky J.S. weeks or Halloween.",
+    hoverSound: "tomes/",
+    appearance: {
+      // Custom festive Day of the Dead palette matching his purple, gold, and pink design.
+      cardBackground: "#0d0214",       // Deepest twilight purple
+      cardHoverBackground: "#1e052e",  // Rich violet expansion on hover
+      textColor: "#e6bdff",            // Soft lavender for readability
+      nameColor: "#ffd700",            // Radiant marigold gold
+      rarityColor: "#ff2a85",          // Vibrant skull-accent pink
+      categoryColor: "#ffffff",        // Crisp bone white
+      borderColor: "#ffd700",          // Gold borders
+      borderHoverColor: "#ff2a85",     // Swaps to glowing pink on hover
+      borderWidth: 1,
+      radius: 14,
+      shadow: "0 8px 24px rgba(0,0,0,.45)",
+      hoverShadow: "0 16px 42px rgba(255,42,133,.3)", // Pink-tinted shadow glow
+      glowColor: "#ffd700",            // Gold card glow
+      glowStrength: 0.7,
+      nameGlowColor: "#ffd700",         // Gold text glow
+      nameGlowStrength: 0.5,
+      rarityGlowColor: "#ff2a85",       // Intense pink rarity glow
+      rarityGlowStrength: 0.9,
+      imageGlowColor: "#9d00ff",       // Deep purple eye-glow background effect
+      imageGlowStrength: 0.8,
+      imageFit: "contain",
+      detailBackground: "#09010e",
+      detailTextColor: "#f6e6ff",
+      detailBorderColor: "#ff2a85",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#ffd700",
+      detailSectionColor: "#ff2a85",
+      detailImageBackground: "#170324",
+      detailImageFit: "contain",
+      detailRadius: 24,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.85)",
+      detailGlowColor: "#9d00ff",       // Spectral purple ambient glow
+      detailGlowStrength: 0.55,
+      disableRarityAnimation: false
+    }
+  },
+    {
+    id: "the-one-who-drew-it",
+    name: "THE ONE WHO DREW IT",
+    image: "tomes/the_one_who_drew_it.png",
+    rarity: "The end.",
+    category: "E,G,B,S",
+    description: "This Tome Grants you 6M cosma,89M DEATH ROLNA + all the Legnds roles.",
+    lore: "PLACEHOLDER_LORE",
+    unlockCondition: "Can be tamed only By geting every J.L badge.",
+    hoverSound: "tomes/hoversound.mp3",
+    appearance: {
+      // Dark corrupted theme focusing strictly on deep blacks and glowing blues
+      cardBackground: "#05070a",       // Pure obsidian black
+      cardHoverBackground: "#0b111a",  // Shadowy dark blue-gray on hover
+      textColor: "#89b4fa",            // Clear, readable ice blue
+      nameColor: "#00d2ff",            // Sharp neon blue
+      rarityColor: "#0055ff",          // Deep sapphire blue
+      categoryColor: "#ffffff",        // Crisp bone white
+      borderColor: "#00d2ff",          // Neon blue border
+      borderHoverColor: "#ffffff",     // Shifts to stark white on hover
+      borderWidth: 1,
+      radius: 14,
+      shadow: "0 8px 24px rgba(0,0,0,.6)",
+      hoverShadow: "0 16px 42px rgba(0,210,255,.25)", // Soft neon blue shadow casting
+      glowColor: "#00d2ff",            // Electric blue card glow
+      glowStrength: 0.75,
+      nameGlowColor: "#0055ff",         // Deep blue text glow
+      nameGlowStrength: 0.5,
+      rarityGlowColor: "#00d2ff",       // Intense neon blue rarity glow
+      rarityGlowStrength: 0.85,
+      imageGlowColor: "#030a16",       // Deep black-blue image backdrop
+      imageGlowStrength: 0.6,
+      imageFit: "contain",
+      detailBackground: "#020407",
+      detailTextColor: "#cdd6f4",
+      detailBorderColor: "#0055ff",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#00d2ff",
+      detailSectionColor: "#0055ff",
+      detailImageBackground: "#080d16",
+      detailImageFit: "contain",
+      detailRadius: 24,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.9)",
+      detailGlowColor: "#00d2ff",       // Striking blue outline glow for the panel
+      detailGlowStrength: 0.5,
       disableRarityAnimation: false
     }
   }
