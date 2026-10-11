@@ -556,6 +556,9 @@ button {
 }
 
 .profile-avatar-frame {
+    overflow: hidden;
+    isolation: isolate;
+    box-sizing: border-box;
     width: 180px;
     height: 180px;
     padding: 4px;
@@ -572,8 +575,10 @@ button {
     height: 100%;
     display: block;
     object-fit: cover;
+    object-position: center center;
     border-radius: 26px;
     background: #06100a;
+    overflow: hidden;
 }
 
 .profile-title-area h1 {
@@ -4389,3 +4394,14 @@ body.tome-detail-open{overflow:hidden}
 /* Custom tome image loading fallback and optional lore block. */
 .badge-image-missing{display:grid;place-items:center;width:100%;height:100%;padding:8px;color:#a9a1b4;font-size:9px;line-height:1.4;letter-spacing:.12em;text-align:center;border:1px dashed rgba(255,255,255,.18);border-radius:10px}
 .tome-lore{padding-top:8px;border-top:1px solid rgba(255,255,255,.07);font-style:italic;color:#a9a1b4!important}
+
+/* Refreshed CHAT_90 message effects: legible cards first, effects stay on the card surface. */
+.chat-message { overflow: hidden; isolation: isolate; background-color: rgba(4,10,9,.88); background-image: linear-gradient(115deg, rgba(255,255,255,.035), transparent 42%); }
+.chat-message-background { position:absolute; inset:0; z-index:-1; background-size:cover; background-position:center; opacity:.42; pointer-events:none; }
+.chat-message-body, .chat-message-head, .chat-message-media, .chat-message-image, .chat-message-tools { position:relative; z-index:1; }
+.chat-message.dev-team { border:1px solid rgba(255,35,55,.8); border-left:3px solid #ff243b; background:linear-gradient(115deg,rgba(70,0,10,.94),rgba(13,5,8,.94) 70%); box-shadow:0 0 12px rgba(255,20,45,.38),0 0 30px rgba(255,20,45,.2),inset 0 0 22px rgba(255,25,45,.12); animation:devTeamPulse 2.4s ease-in-out infinite; }
+.chat-message.dev-team .chat-message-name::after { content:' 🔨'; filter:drop-shadow(0 0 5px #ff344a); }
+.chat-message.admin-overdrive { border-color:#ff3b55; box-shadow:0 0 15px #ff243b55,inset 0 0 28px #ff243b16; animation:devTeamPulse 1.6s ease-in-out infinite; }
+.chat-message.admin-rainbow { border-image:linear-gradient(90deg,#ff405f,#ffbd4a,#61ffb0,#48cfff,#bc6bff,#ff405f) 1; box-shadow:0 0 18px #b65bff40; }
+.chat-message.aurora-flow { box-shadow:0 0 20px rgba(57,255,190,.16),inset 0 0 22px rgba(80,130,255,.08); }
+@keyframes devTeamPulse { 0%,100% { box-shadow:0 0 10px rgba(255,20,45,.25),inset 0 0 12px rgba(255,25,45,.08); } 50% { box-shadow:0 0 22px rgba(255,20,45,.48),0 0 38px rgba(255,20,45,.18),inset 0 0 24px rgba(255,25,45,.15); } }

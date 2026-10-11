@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
 const DB = path.join(ROOT, 'chat90-data.json');
 const NORMAL_PASSWORD = process.env.CHAT90_PASSWORD || '56789';
-const ADMIN_PIN = process.env.CHAT90_ADMIN_PIN || '7879';
+const ADMIN_PIN = process.env.CHAT90_ADMIN_PIN || 'NikoGarden';
+const ADMIN_LOGIN_PASSWORD = process.env.CHAT90_ADMIN_PASSWORD || 'NikoGarden';
 const BAN_MS = 4 * 24 * 60 * 60 * 1000;
 
 let state = { profiles: {}, messages: [], banned: {}, banHistory: [], friends: {}, dms: {} };
@@ -115,8 +116,9 @@ wss.on('connection',(ws)=>{
 
     if(m.type==='auth') {
       const pass=String(m.password||'');
-      if(pass!==NORMAL_PASSWORD) return send(ws,{type:'authResult',ok:false,message:'ACCESS DENIED — INVALID MEMBER PASSWORD.'});
-      s.authenticated=true; s.admin=false;
+      if(pass!==NORMAL_PASSWORD && pass!==ADMIN_LOGIN_PASSWORD) return send(ws,{type:'authResult',ok:false,message:'ACCESS DENIED — INVALID MEMBER PASSWORD.'});
+      s.authenticated=true; s.admin=(pass===ADMIN_LOGIN_PASSWORD);
+      if(s.admin) return send(ws,{type:'authResult',ok:true,admin:true,adminLogin:true});
       return send(ws,{type:'authResult',ok:true,admin:false});
     }
 
@@ -182,14 +184,14 @@ wss.on('connection',(ws)=>{
 
     if(m.type==='adminCommand') {
       if(!s.admin) return send(ws,{type:'adminCommandResult',ok:false,message:'ADMIN PANEL LOCKED.'});
-      const raw=clean(m.command,500); const parts=raw.replace(/^\//,'').trim().split(/\s+/); const cmd=(parts.shift()||'').toLowerCase(); const arg=parts.join(' ').trim();
+      const raw=clean(m.command,500); const parts=raw.replace(/^\//,'').trim().split(/\s+/); const cmd=(parts.shift()||'').toLowerCase(); let arg=parts.join(' ').trim();
       const result={ok:true,command:raw};
-      if(cmd==='help') result.lines=['/help','/users','/online','/user <name>','/history <name>','/ban <name>','/unban <name>','/kick <name>','/delete <message id>','/clear','/say <message>','/announce <message>','/effect <effect>','/effects','/glow <color>','/bans','/history-bans'];
+      if(cmd==='help') result.lines=['/help','/users','/online','/user <name>','/history <name>','/ban <name> [hours]','/unban <name>','/kick <name>','/delete <message id>','/clear','/say <message>','/announce <message>','/effect <effect>','/effects','/glow <color>','/bans','/history-bans'];
       else if(cmd==='users') result.users=Object.values(state.profiles).map(publicProfile);
       else if(cmd==='online') result.users=onlineProfiles();
       else if(cmd==='user') { const p=findProfile(arg); result.profile=p?publicProfile(p):null; result.message=p?'USER FOUND.':'USER NOT FOUND.'; }
       else if(cmd==='history') { const p=findProfile(arg); result.history=p?state.messages.filter(x=>x.username===p.username).slice(-100):[]; result.message=p?'HISTORY LOADED.':'USER NOT FOUND.'; }
-      else if(cmd==='ban') { const p=findProfile(arg); if(!p) result={ok:false,message:'USER NOT FOUND.'}; else { const now=Date.now(); state.banned[p.username.toLowerCase()]={username:p.username,bannedAt:now,expiresAt:now+BAN_MS}; state.banHistory.push({username:p.username,bannedAt:now,expiresAt:now+BAN_MS,by:s.username}); save(); for(const ss of sessions.values()) if(ss.username===p.username){send(ss.ws,{type:'kicked',message:'You are banned from CHAT_90 for 4 days.'}); try{ss.ws.close()}catch(_){}} broadcast({type:'presence',online:onlineProfiles()}); result.message=`${p.username} BANNED FOR 4 DAYS.`;} }
+      else if(cmd==='ban') { const bits=arg.split(/\s+/); const hoursToken=bits.length>1?bits[bits.length-1]:''; const hours=Number(hoursToken); const hasHours=bits.length>1 && Number.isFinite(hours) && hours>0; const targetName=hasHours?bits.slice(0,-1).join(' '):arg; const p=findProfile(targetName); if(!p) result={ok:false,message:'USER NOT FOUND. USE /ban <name> [hours].'}; else { const duration=hasHours?Math.min(hours,8760)*3600000:BAN_MS; const now=Date.now(); state.banned[p.username.toLowerCase()]={username:p.username,bannedAt:now,expiresAt:now+duration}; state.banHistory.push({username:p.username,bannedAt:now,expiresAt:now+duration,by:s.username}); save(); for(const ss of sessions.values()) if(ss.username===p.username){send(ss.ws,{type:'kicked',message:`You are banned from CHAT_90 for ${hasHours?hours+' hours':'4 days'}.`}); try{ss.ws.close()}catch(_){}} broadcast({type:'presence',online:onlineProfiles()}); result.message=`${p.username} BANNED FOR ${hasHours?hours+' HOURS':'4 DAYS'}.`;} }
       else if(cmd==='unban') { const key=arg.toLowerCase(); if(!state.banned[key]) result={ok:false,message:'ACTIVE BAN NOT FOUND.'}; else { delete state.banned[key]; state.banHistory.push({username:arg,unbannedAt:Date.now(),by:s.username}); save(); result.message=`${arg} UNBANNED.`; } }
       else if(cmd==='kick') { const p=findProfile(arg); if(!p) result={ok:false,message:'USER NOT FOUND.'}; else { for(const ss of sessions.values()) if(ss.username===p.username){send(ss.ws,{type:'kicked',message:'You were kicked from CHAT_90.'}); try{ss.ws.close()}catch(_){}} result.message=`${p.username} KICKED.`; } }
       else if(cmd==='delete') { const before=state.messages.length; state.messages=state.messages.filter(x=>x.id!==arg); save(); broadcast({type:'historySync',history:state.messages.slice(-250),removed:[]}); result.message=state.messages.length<before?'MESSAGE DELETED.':'MESSAGE ID NOT FOUND.'; }
