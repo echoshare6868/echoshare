@@ -411,5 +411,55 @@ window.ECHO_CUSTOM_TOMES = [
       detailGlowStrength: 0.55,
       disableRarityAnimation: false
     }
+  },
+    {
+    id: "spikes-phantom",
+    name: "SPIKES PHANTOM",
+    image: "tomes/spikes_phantom.png",
+    rarity: "The end.",
+    category: "E,G,B,S",
+    description: "This Tome unlocks D,G,R! tomes once owned",
+    lore: "PLACEHOLDER_LORE",
+    unlockCondition: "You need to Fight the Korthas To earn this totom",
+    hoverSound: "tomes/shrine.mp3",
+    appearance: {
+      // Intimidating phantom style featuring deep obsidian blacks and chilling soul-blue flames
+      cardBackground: "#04060a",       // Deep abyssal black void
+      cardHoverBackground: "#0b121f",  // Frozen phantom shadow on hover
+      textColor: "#99ccff",            // Pale ethereal blue for crisp readability
+      nameColor: "#00b3ff",            // Piercing bright soul-fire blue
+      rarityColor: "#0044cc",          // Deep dark phantom sapphire
+      categoryColor: "#ffffff",        // Cold bone white
+      borderColor: "#00b3ff",          // Spectral blue flaming border
+      borderHoverColor: "#ffffff",     // Blinds to crisp white frost on hover
+      borderWidth: 1,
+      radius: 14,
+      shadow: "0 8px 24px rgba(0,0,0,.75)",
+      hoverShadow: "0 16px 42px rgba(0,179,255,.3)", // Floating blue flame ambient shadow
+      glowColor: "#00b3ff",            // Eerie ghost light card glow
+      glowStrength: 0.85,
+      nameGlowColor: "#0044cc",         // Phantom blue title drop glow
+      nameGlowStrength: 0.6,
+      rarityGlowColor: "#00b3ff",       // Intense glowing blue rarity flash
+      rarityGlowStrength: 0.95,
+      imageGlowColor: "#020814",       // Cold dark background frame for the gate image
+      imageGlowStrength: 0.7,
+      imageFit: "contain",
+      detailBackground: "#020306",
+      detailTextColor: "#d9e8ff",
+      detailBorderColor: "#0044cc",
+      detailTitleColor: "#ffffff",
+      detailKickerColor: "#00b3ff",
+      detailSectionColor: "#0044cc",
+      detailImageBackground: "#070d1a",
+      detailImageFit: "contain",
+      detailRadius: 24,
+      detailBorderWidth: 1,
+      detailShadow: "0 28px 90px rgba(0,0,0,.98)",
+      detailGlowColor: "#00b3ff",       // Striking phantom frost glow line
+      detailGlowStrength: 0.6,
+      disableRarityAnimation: false
+    }
   }
+
 ];
